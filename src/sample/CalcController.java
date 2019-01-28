@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 
 public class CalcController implements Initializable {
 
+    // declaring stuff
     @FXML
     private JFXTextField height;
 
@@ -41,25 +42,29 @@ public class CalcController implements Initializable {
 
     private boolean gender = false;
 
+    // this function runs at the start of the program before everything else (to initialize the validators etc)
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // disable calculate button until all 3 fields are filled
         BooleanBinding isData = height.textProperty().isEmpty().or(weight.textProperty().isEmpty());
         calc.disableProperty().bind(isData);
 
-        // validators to make sure id field is only numbers and not empty and password filed is not empty.
+        // validators to make sure height and weight fields are not empty and only numbers.
         NumberValidator numberValidator = new NumberValidator();
-        height.getValidators().add(numberValidator);
-        weight.getValidators().add(numberValidator);
-        numberValidator.setStyle("-fx-font-size: 8px;");
-        numberValidator.setMessage("only numbers!");
+        height.getValidators().add(numberValidator); // add the number validator to filed validators
+        weight.getValidators().add(numberValidator); // add the number validator to filed validators
+        numberValidator.setStyle("-fx-font-size: 8px;"); // set text size via css (so it wont look oversized)
+        numberValidator.setMessage("only numbers!"); // error message to show if the text doesn't meet the requirements
+        // add listeners to each text field focus property.
         height.focusedProperty().addListener((observableValue, oldValue, newValue) -> {
+            // only validate if new value doesn't meet the requirements or is empty
             if (!newValue){
                 height.validate();
                 if (!calc.isDisable()) calc.setDisable(true); // disable calculate button if the values are not numbers
             }
         });
         height.focusedProperty().addListener((observableValue, oldValue, newValue) -> {
+            // only validate if new value doesn't meet the requirements or is empty
             if (!newValue){
                 height.validate();
                 if (!calc.isDisable()) calc.setDisable(true); // disable calculate button if the values are not numbers
@@ -74,7 +79,6 @@ public class CalcController implements Initializable {
         double calculated = Double.valueOf(weight.getText()) / (cm * cm); // calculate the BMI
 
         // set the status label text based on BMI
-
         if (calculated >= 40) status.setText("Obese Class 3");
         else if (calculated >= 35 && calculated <= 40) status.setText("Obese Class 2");
         else if (calculated >= 30 && calculated <= 35) status.setText("Obese Class 1");
@@ -84,7 +88,7 @@ public class CalcController implements Initializable {
         else if (calculated >= 16 && calculated <= 17) status.setText("Moderate Thinness");
         else if (calculated <= 16) status.setText("Severe Thinness");
 
-        // calculate ideal weight based on gender and Robinson's formula(1983) https://www.calculator.net/ideal-weight-calculator.html
+        // calculate ideal weight based on gender, height and Robinson's formula(1983) https://www.calculator.net/ideal-weight-calculator.html
         // not quiet perfect but will be enough for now
         double ideal = 0;
         if (gender){

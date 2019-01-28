@@ -13,7 +13,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("BMI Calculator");
         primaryStage.setScene(new Scene(root, 311, 451));
-        primaryStage.setResizable(false);
+        primaryStage.setResizable(false); // make the stage unresizable
         primaryStage.show();
     }
 
