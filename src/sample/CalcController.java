@@ -135,5 +135,4 @@ public class CalcController implements Initializable {
             gender = true;
         }
     }
-
 }

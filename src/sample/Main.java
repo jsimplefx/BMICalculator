@@ -12,8 +12,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("BMI Calculator");
-        primaryStage.setScene(new Scene(root, 311, 451));
-        primaryStage.setResizable(false); // make the stage unresizable
+        primaryStage.setScene(new Scene(root, 320, 451));
+//        primaryStage.setResizable(false); // make the stage unresizable
         primaryStage.show();
     }
 
